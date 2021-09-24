@@ -1,0 +1,72 @@
+{
+  "manifest_version": 2,
+  "name": "google_news Bot",
+  "description": "google_news第一次重构",
+  "version": "1.0.0",
+  "icons": {
+    "16": "img/Crowbar Bot - Weibo.png",
+    "32": "img/Crowbar Bot - Weibo.png",
+    "48": "img/Crowbar Bot - Weibo.png"
+  },
+
+  "permissions":
+  [
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "https://news.google.com/",
+    "clipboardWrite",
+    "clipboardRead",
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/google_news/Googlenews_common.js","js/common_operators.js"],
+      "runAt": "document_start"
+    },
+    {
+      "matches": ["https://news.google.com/foryou?hl=en-US&*"],
+      "js": ["js/google_news/home_surface.js"],
+      "runAt": "document_start"
+    },
+    {
+      "matches": ["https://news.google.com/topics/*"],
+      "js": ["js/google_news/category_surface.js"],
+      "runAt": "document_start"
+    },
+    {
+      "matches": ["https://news.google.com/publications/*?hl=en-US&gl=US&ceid=US%3Aen"],
+      "js": ["js/google_news/user_article_surface.js"],
+      "runAt": "document_start"
+    },
+    {
+      "matches": ["https://news.google.com/search?q=*"],
+      "js": ["js/google_news/article_search_surface.js"],
+      "runAt": "document_start"
+    },
+    {
+      "matches": ["https://news.google.com/topics/*/sections/*?hl=en-US&gl=US&ceid=US%3Aen"],
+      "js": ["js/google_news/sub_category_surface.js"],
+      "runAt": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "js/google_news/background_db.js",
+      "js/google_news/background_switch.js",
+      "js/google_news/background.js",
+      "js/google_news/background_bot.js"
+    ]
+  },
+  "browser_action":
+	{
+		"default_icon": "img/Crowbar Bot - Weibo.png",
+		"default_title": "WeiboBot",
+		"default_popup": "html/popup.html"
+	}
+}
